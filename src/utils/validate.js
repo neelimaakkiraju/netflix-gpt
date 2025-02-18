@@ -5,4 +5,5 @@ export const checkIsValid =(email,password)=>{
 
     if(!isEmailValid) return "Invalid Email"
     if(!isPasswordValid) return "Invalid Password"
+    return null
 }

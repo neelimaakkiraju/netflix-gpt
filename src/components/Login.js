@@ -1,15 +1,23 @@
 import React from "react";
 import Header from "./Header";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { checkIsValid } from "../utils/validate";
 
 const Login = () => {
   const [isSignin, setIsSignIn] = useState(true);
+  const [errorMsg,setErrMsg]= useState(null)
+  const email = useRef(null)
+  const password = useRef(null)
+
   const handleForm = () => {
     setIsSignIn(!isSignin);
   };
   const handleSubmit =()=>{
 
+    // console.log(email.current.value)
+    // console.log(password.current.value)
+   const message = checkIsValid(email.current.value,password.current.value)
+   setErrMsg(message)
   }
   return (
     <div>
@@ -20,27 +28,33 @@ const Login = () => {
           alt="logo"
         />
       </div>
-      <form className="absolute bg-black w-4/12 my-16 mx-auto left-0 right-0 rounded-lg p-12 text-white bg-opacity-80">
+      <form onSubmit={(e)=>e.preventDefault()} className="absolute bg-black w-4/12 my-16 mx-auto left-0 right-0 rounded-lg p-12 text-white bg-opacity-80">
         <h1 className="text-3xl  font-bold py-4">
           {!isSignin ? "Sign Up" : "Sign In"}
         </h1>
         {!isSignin && (
           <input
+            required
             type="text"
             placeholder="Full Name"
             className="p-2 my-2 w-full rounded-sm bg-gray-600"
           />
         )}
         <input
-          type="email"
+          ref={email}
+          type="text"
           placeholder="Email"
           className="p-2 my-2 w-full rounded-sm bg-gray-600"
         />
         <input
+          ref={password}
           type="password"
           placeholder="password"
           className="p-2 my-2 w-full rounded-sm bg-gray-600"
         />
+        <p className="text-red-700 font-bold">
+          {errorMsg}
+        </p>
         <button className="p-3 my-4 bg-red-600 w-full rounded-md font-bold" onClick={handleSubmit}>
           {!isSignin ? "Sign Up" : "Sign In"}
         </button>
