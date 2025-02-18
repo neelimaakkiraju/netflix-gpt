@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import { useState,useRef } from "react";
 import { checkIsValid } from "../utils/validate";
+import { createUserWithEmailAndPassword ,  signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "../utils/firebase"
 
 const Login = () => {
   const [isSignin, setIsSignIn] = useState(true);
@@ -13,11 +15,39 @@ const Login = () => {
     setIsSignIn(!isSignin);
   };
   const handleSubmit =()=>{
-
-    // console.log(email.current.value)
-    // console.log(password.current.value)
    const message = checkIsValid(email.current.value,password.current.value)
    setErrMsg(message)
+   if(errorMsg)return
+   if(!isSignin){
+    createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    
+    const user = userCredential.user;
+    console.log(user)
+   
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrMsg(errorCode+"-"+errorMessage)
+    
+  });
+
+   }else{
+    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+     
+    const user = userCredential.user;
+    console.log(user)
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrMsg(errorCode + "-"+errorMessage)
+
+  });
+    
+   }
   }
   return (
     <div>
