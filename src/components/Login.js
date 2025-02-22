@@ -8,14 +8,15 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice.js";
+import { BG_IMG_URL, USER_ICON } from "../utils/constants.js";
 
 const Login = () => {
   const [isSignin, setIsSignIn] = useState(true);
   const [errorMsg, setErrMsg] = useState(null);
-  const navigate = useNavigate();
+ 
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -36,8 +37,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://cdn.vectorstock.com/i/1000v/74/41/white-user-icon-vector-42797441.jpg",
+            photoURL:USER_ICON,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -49,7 +49,7 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
+              
             })
             .catch((error) => {
               setErrMsg(error.message);
@@ -69,7 +69,7 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
+          
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -86,7 +86,7 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/f268d374-734d-474f-ad13-af5ba87ef9fc/web/IN-en-20250210-TRIFECTA-perspective_92338d5d-6ccd-4b1a-8536-eb2b0240a55e_small.jpg"
+          src={BG_IMG_URL}
           alt="logo"
         />
       </div>
