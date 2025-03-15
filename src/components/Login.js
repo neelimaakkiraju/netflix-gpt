@@ -68,7 +68,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
           
         })
         .catch((error) => {
@@ -88,11 +88,12 @@ const Login = () => {
         <img
           src={BG_IMG_URL}
           alt="logo"
+          className="w-screen h-screen bg-cover"
         />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="absolute bg-black w-4/12 my-16 mx-auto left-0 right-0 rounded-lg p-12 text-white bg-opacity-80"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black w-4/12 rounded-lg p-12 text-white bg-opacity-80"
       >
         <h1 className="text-3xl  font-bold py-4">
           {!isSignin ? "Sign Up" : "Sign In"}
